@@ -1,0 +1,188 @@
+{% include "header.html" %}
+
+           <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+                    <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+                    <br>
+                    {% if current_user.is_authenticated and current_user.id == 1: %}
+                    <div class="justify-content-end mb-4">
+                        <a class="btn btn-primary float-right"
+                          href="{{url_for('add_new_project')}}"
+                          >Create New Post</a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </header>
+
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                {% for project in all_projects: %}
+                    {% if project.id%2 == 1 and project.id == 1: %}
+                <!-- Featured blog post-->
+                <div class="card mb-4">
+                    <a href="{{ url_for('show_project', project_id=project.id) }}"><img class="card-img-top project-img-featured" src="{{ project.img_url }}" alt="..." /></a>
+                    <div class="card-body">
+                        <div class="small text-muted">{{ project.date }}</div>
+                        <h2 class="card-title">{{ project.title }}</h2>
+                        <p class="card-text text-truncate">{{ project.body }}</p>
+                        <a class="btn btn-primary" href="{{ url_for('show_project', project_id=project.id) }}">Read more →</a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+                <!-- Nested row for non-featured blog posts-->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Blog post-->
+                        {% for project in all_projects: %}
+                            {% if project.id%2 == 1 and project.id != 1: %}
+                        <div class="card mb-4">
+                            <a href="{{ url_for('show_project', project_id=project.id) }}"><img class="card-img-top project-img" src="{{ project.img_url }}" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ project.date }}</div>
+                                <h2 class="card-title h4">{{ project.title }}</h2>
+                                <p class="card-text text-truncate">{{ project.body }}</p>
+                                <a class="btn btn-primary" href="{{ url_for('show_project', project_id=project.id) }}">Read more →</a>
+                            </div>
+                        </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Blog post-->
+                        {% for project in all_projects: %}
+                            {% if project.id%2 == 0: %}
+                        <div class="card mb-4">
+                            <a href="{{ url_for('show_project', project_id=project.id) }}"><img class="card-img-top project-img" src="{{ project.img_url }}" alt="..." /></a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ project.date }}</div>
+                                <h2 class="card-title h4">{{ project.title }}</h2>
+                                <p class="card-text text-truncate">{{ project.body }}</p>
+                                <a class="btn btn-primary" href="{{ url_for('show_project', project_id=project.id) }}">Read more →</a>
+                            </div>
+                        </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Pagination-->
+                <nav aria-label="Pagination">
+                    <hr class="my-0" />
+                    <ul class="pagination justify-content-center my-4">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#!">Web Design</a></li>
+                                    <li><a href="#!">HTML</a></li>
+                                    <li><a href="#!">Freebies</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#!">JavaScript</a></li>
+                                    <li><a href="#!">CSS</a></li>
+                                    <li><a href="#!">Tutorials</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+
+                <div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!
+                    </div>
+
+
+
+                </div>
+
+                <div class="my-3 p-3 bg-body rounded shadow-sm">
+                        <h6 class="border-bottom pb-2 mb-0">Suggestions</h6>
+                        <div class="d-flex text-body-secondary pt-3">
+                            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                    <div class="d-flex justify-content-between">
+                                        <strong class="text-gray-dark">Full Name</strong>
+                                        <a href="#">Follow</a>
+                                    </div>
+                                    <span class="d-block">@username</span>
+                            </div>
+                        </div>
+
+                    <div class="d-flex text-body-secondary pt-3">
+                          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                          <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div class="d-flex justify-content-between">
+                                  <strong class="text-gray-dark">Full Name</strong>
+                                  <a href="#">Follow</a>
+                                 </div>
+                              <span class="d-block">@username</span>
+                            </div>
+                    </div>
+
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                             <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Full Name</strong>
+                                    <a href="#">Follow</a>
+                             </div>
+                            <span class="d-block">@username</span>
+                        </div>
+                    </div>
+                <small class="d-block text-end mt-3">
+                  <a href="#">All suggestions</a>
+                </small>
+            </div>
+
+                                <div class="card mb-4">
+                    <div class="card-header">INSERT API CONTENT HERE</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% include "footer.html" %}
